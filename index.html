@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wellbeing App</title>
+    <!-- Use Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Use a nice, friendly font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light background color */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- Main container for the app -->
+    <div class="wellbeing-container bg-white p-8 rounded-2xl shadow-2xl max-w-lg w-full text-center transform transition-all duration-500 ease-in-out">
+        
+        <!-- App Title -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 select-none">Your Daily Dose of Positivity</h1>
+        
+        <!-- Affirmation Display Area -->
+        <div class="affirmation-card bg-purple-100 text-purple-800 p-6 rounded-xl shadow-lg mb-6 min-h-[120px] flex items-center justify-center">
+            <p id="affirmation-text" class="text-xl font-semibold italic">Click the button to get started!</p>
+        </div>
+        
+        <!-- Button to generate a new affirmation -->
+        <button id="generate-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-colors duration-300 transform hover:scale-105">
+            Get a New Affirmation
+        </button>
+        
+    </div>
+
+    <script>
+        // Use an IIFE (Immediately Invoked Function Expression) to avoid global variable pollution
+        (function() {
+            // An array of positive affirmations
+            const affirmations = [
+                "I am in control of my happiness.",
+                "I am capable of amazing things.",
+                "My mind is full of creative ideas.",
+                "I radiate love and attract abundance.",
+                "Every day is a new opportunity to grow.",
+                "I am strong, resilient, and brave.",
+                "I trust my intuition and follow my heart.",
+                "I am worthy of all the good things life has to offer.",
+                "My potential is limitless.",
+                "I am a source of positivity for myself and others."
+            ];
+
+            const affirmationText = document.getElementById('affirmation-text');
+            const generateBtn = document.getElementById('generate-btn');
+
+            // Function to get a random affirmation from the array
+            function getRandomAffirmation() {
+                const randomIndex = Math.floor(Math.random() * affirmations.length);
+                return affirmations[randomIndex];
+            }
+
+            // Event listener for the button click
+            generateBtn.addEventListener('click', () => {
+                // Update the text content with a random affirmation
+                affirmationText.textContent = getRandomAffirmation();
+            });
+
+            // Optional: Generate an initial affirmation on page load
+            // window.addEventListener('load', () => {
+            //     affirmationText.textContent = getRandomAffirmation();
+            // });
+
+        })();
+    </script>
+
+</body>
+</html>
