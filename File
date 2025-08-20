@@ -1,0 +1,63 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+
+export default function WellbeingChecker() {
+  const [formData, setFormData] = useState({ mood: 5, stress: 5, energy: 5 });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: Number(e.target.value) });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  const data = [
+    { name: "Mood", value: formData.mood },
+    { name: "Stress", value: formData.stress },
+    { name: "Energy", value: formData.energy },
+  ];
+
+  return (
+    <div className="p-6 max-w-lg mx-auto">
+      {!submitted ? (
+        <Card className="p-4 shadow-xl rounded-2xl">
+          <h2 className="text-xl font-bold mb-4">Student Wellbeing Checker</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <label className="block">
+              Mood (1-10)
+              <Input type="number" min="1" max="10" name="mood" value={formData.mood} onChange={handleChange} />
+            </label>
+            <label className="block">
+              Stress (1-10)
+              <Input type="number" min="1" max="10" name="stress" value={formData.stress} onChange={handleChange} />
+            </label>
+            <label className="block">
+              Energy (1-10)
+              <Input type="number" min="1" max="10" name="energy" value={formData.energy} onChange={handleChange} />
+            </label>
+            <Button type="submit" className="w-full">Submit</Button>
+          </form>
+        </Card>
+      ) : (
+        <Card className="p-4 shadow-xl rounded-2xl">
+          <h2 className="text-xl font-bold mb-4">Your Wellbeing Results</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={data}>
+              <XAxis dataKey="name" />
+              <YAxis domain={[0, 10]} />
+              <Tooltip />
+              <Bar dataKey="value" fill="#4f46e5" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+          <Button className="w-full mt-4" onClick={() => setSubmitted(false)}>Redo Check</Button>
+        </Card>
+      )}
+    </div>
+  );
+}
